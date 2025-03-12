@@ -8,6 +8,7 @@ if 'chat_history' not in st.session_state:
     st.session_state.answer = ""
     st.session_state.result = ""
     st.session_state.query = ""
+    st.session_state.character_dic = []
     st.session_state.images = []
 
 # Show title and description.
