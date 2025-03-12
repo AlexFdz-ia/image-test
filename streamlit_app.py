@@ -45,7 +45,7 @@ if not check(genre=genre,
 
 else:
     
-    full_text = read_file(uploaded_file=uploaded_file)
+    full_text = read_file(file=uploaded_file)
 
     characters_dic = generate_characters(genre=genre, vibe=vibe, target=target, num_characters=num_characters)
 
