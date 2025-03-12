@@ -72,6 +72,7 @@ if not st.session_state.chat_history:
                                             vibe=vibe, 
                                             target=target, 
                                             num_characters=num_characters)
+            st.session_state.character_dic = characters_dic
 
             prompt = generate_prompt(genre=genre, 
                                     vibe=vibe, 
@@ -128,6 +129,8 @@ else:
                                             vibe=vibe, 
                                             target=target, 
                                             num_characters=num_characters)
+            
+            st.session_state.character_dic = characters_dic
 
             prompt = generate_prompt(genre=genre, 
                                     vibe=vibe, 
@@ -168,7 +171,7 @@ else:
 
     i = 0
     for image in st.session_state.images:
-        st.image(image, caption=characters_dic[i]["name"], use_container_width=True)
+        st.image(image, caption=st.session_state.characters_dic[i]["name"], use_container_width=True)
         i += 1
 
 
