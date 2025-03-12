@@ -4,7 +4,7 @@ from img_functions import *
 
 st.set_page_config(
     page_title="Creador de novelas",
-    page_icon="🖍️",
+    page_icon="📖",
 )
 
 # Inicializa el `session_state` si aún no está inicializado
