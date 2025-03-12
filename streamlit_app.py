@@ -8,7 +8,7 @@ if 'chat_history' not in st.session_state:
     st.session_state.answer = ""
     st.session_state.result = ""
     st.session_state.query = ""
-    st.session_state.character_dic = []
+    st.session_state.characters_dic = []
     st.session_state.images = []
 
 # Show title and description.
@@ -73,7 +73,7 @@ if not st.session_state.chat_history:
                                             vibe=vibe, 
                                             target=target, 
                                             num_characters=num_characters)
-            st.session_state.character_dic = characters_dic
+            st.session_state.characters_dic = characters_dic
 
             prompt = generate_prompt(genre=genre, 
                                     vibe=vibe, 
@@ -131,7 +131,7 @@ else:
                                             target=target, 
                                             num_characters=num_characters)
             
-            st.session_state.character_dic = characters_dic
+            st.session_state.characters_dic = characters_dic
 
             prompt = generate_prompt(genre=genre, 
                                     vibe=vibe, 
