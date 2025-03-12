@@ -171,7 +171,7 @@ else:
     elif text_len < 500:
         st.text_area("Respuesta: ", st.session_state.result, height=250)
     else:
-        st.text_area("Respuesta: ", st.session_state.result, height=800)
+        st.text_area("Respuesta: ", st.session_state.result, height=500)
 
     i = 0
     for image in st.session_state.images:
