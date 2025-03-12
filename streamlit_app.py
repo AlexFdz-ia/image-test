@@ -166,6 +166,11 @@ else:
     else:
         st.text_area("Respuesta: ", st.session_state.result, height=800)
 
+    i = 0
+    for image in st.session_state.images:
+        st.image(image, caption=characters_dic[i]["name"], use_container_width=True)
+        i += 1
+
 
 
 
