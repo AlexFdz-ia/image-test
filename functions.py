@@ -1,9 +1,28 @@
 import json
+import streamlit as st
 from PyPDF2 import PdfReader
 import google.generativeai as genai
 
-def check(genre, vibe, target, duration, num_characters, num_scene, num_chapters, submit, requirements, uploaded_file):
-    return (genre and vibe and target and duration and num_characters and num_scene and num_chapters and submit and requirements and uploaded_file)
+def check(genre, 
+          vibe, 
+          target, 
+          duration, 
+          num_characters, 
+          num_scene, 
+          num_chapters, 
+          # submit, 
+          requirements, 
+          uploaded_file):
+    return (genre and 
+            vibe and 
+            target and 
+            duration and 
+            num_characters and 
+            num_scene and 
+            num_chapters and 
+            # submit and 
+            requirements and 
+            uploaded_file)
 
 # Establecemos la API de Google
 genai.configure(api_key="AIzaSyDJ7JahaV2HEmQx-RWPeFbvTVhYJZ8DECo")
@@ -31,6 +50,8 @@ def generate_answer(chat_history, prompt):
     # Generamos la respuesta y la añadimos al historial
     response = model.generate_content(chat_history).text
     chat_history.append(response)
+
+    st.session_state.chat_history = chat_history
 
     return response
 
