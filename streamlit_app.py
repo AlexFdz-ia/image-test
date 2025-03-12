@@ -154,6 +154,9 @@ else:
 
             st.session_state.images = generate_images(prompts=img_prompts)
 
+            st.session_state.query = ""
+            st.session_state.result = ""
+
     st.text_area("Respuesta: ", st.session_state.answer, height=800)
 
     query2 = st.text_input("¿Realizar alguna pregunta?")
