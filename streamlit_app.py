@@ -159,11 +159,11 @@ else:
 
     st.text_area("Respuesta: ", st.session_state.answer, height=800)
 
-    query2 = st.text_input("¿Realizar alguna pregunta?")
+    st.session_state.query = st.text_input("¿Realizar alguna pregunta?")
     question2 = st.button("Preguntar")
 
-    if query2 and question2:
-        st.session_state.result = generate_answer(prompt=query2, chat_history=st.session_state.chat_history)
+    if st.session_state.query and question2:
+        st.session_state.result = generate_answer(prompt=st.session_state.query, chat_history=st.session_state.chat_history)
 
     text_len = len(st.session_state.result)
     if text_len < 50:
