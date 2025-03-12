@@ -11,16 +11,16 @@ if 'chat_history' not in st.session_state:
     st.session_state.images = []
 
 # Show title and description.
-st.title("📄 Document question answering")
+st.title("📄 Crea tu propia novela")
 st.write(
-    "Upload a document below and ask a question about it – Gemini will answer! "
+    "Sube un documento PDF y establece los valores para tu obra!"
 )
 
 # Definición del formulario
 # Let the user upload a file via `st.file_uploader`.
 uploaded_file = st.file_uploader("Sube un archivo PDF", type=["pdf"])
 
-genre = st.text_input("Estilo de la obra: ", value="")
+genre = st.text_input("Tipo de la obra: ", value="")
 vibe = st.text_input("Tono de la novela: ", value="")
 target = st.text_input("Público objetivo: ", value="")
 style = st.text_input("Estilo de dibujo: ", value="")
@@ -33,7 +33,16 @@ with col2:
     num_scene = st.number_input("Número de escenas: ", min_value=0, value=0)   
     num_chapters = st.number_input("Número de capítulos: ", min_value=0, value=0)
 
-requirements = st.text_area("Requisitos:", max_chars=500, placeholder="Establecer diferentes especificaciones", height=250)
+requirements = st.text_area("Requisitos:", max_chars=500, placeholder="Establecer diferentes especificaciones", height=250, value="""
+250 caracteres con espacios incluidos (formato smartphone)
+250 cc x caja Unas 3 cajas por imagen
+Un personaje en la caja. Tres imágenes para la prueba
+Ejemplo: Búsqueda de elementos en cuadros para resolver un asunto
+policiaco Cada hallazgo da una pista para resolverlo. Lo hacemos con
+tres cuadros del museo. Para la prueba es en orden.
+Pero quisiera la opción de ponerle varias búsquedas y que las vaya
+realizando el jugador hasta completarlo.
+""")
 
 # Botón de envío
 submit = st.button(label="Generar")
