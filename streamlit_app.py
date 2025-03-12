@@ -1,34 +1,7 @@
-import json
 import streamlit as st
-from PyPDF2 import PdfReader
-import google.generativeai as genai
-from langchain_community.document_loaders import CSVLoader, PyPDFLoader
+from functions import *
 
 chat_history = []
-
-def read_file(file):
-
-    # Leer el archivo PDF
-    pdf_reader = PdfReader(file)
-    full_text = ""
-
-    # Extraer texto de cada página
-    for page in pdf_reader.pages:
-        full_text += page.extract_text()
-        
-    return full_text
-
-# Funcion para generar la respuesta de Gemini
-def generate_answer(chat_history, prompt):
-
-    # Añadimos al historial el ultimo mensaje del ususario
-    chat_history.append(f"User: {prompt}" + "\nAssistant:")
-
-    # Generamos la respuesta y la añadimos al historial
-    response = model.generate_content(chat_history).text
-    chat_history.append(response)
-
-    return response
 
 # Show title and description.
 st.title("📄 Document question answering")
@@ -52,21 +25,50 @@ with col2:
     num_scene = st.number_input("Número de escenas: ", min_value=0, value=0)   
     num_chapters = st.number_input("Número de capítulos: ", min_value=0, value=0)
 
+requirements = st.text_area("Requisitos:", max_chars=500, placeholder="Establecer diferentes especificaciones")
+
 # Botón de envío
 submit = st.button(label="Generar")
 
-def check(genre, vibe, target, duration, num_characters, num_scene, num_chapters, uploaded_file):
-    return (genre and vibe and target and duration and num_characters and num_scene and num_chapters and submit and uploaded_file)
-
-if not check(genre, vibe, target, duration, num_characters, num_scene, num_chapters, uploaded_file):
+if not check(genre=genre, 
+      vibe=vibe, 
+      target=target, 
+      duration=duration, 
+      num_characters=num_characters,
+      num_scene=num_scene,
+      num_chapters=num_chapters,
+      submit=submit,
+      requirements=requirements,
+      uploaded_file=uploaded_file):
 
     st.info("Por favor, rellena todos los campos", icon="ℹ️")
 
 else:
     
-    full_text = read_file(uploaded_file)
+    full_text = read_file(uploaded_file=uploaded_file)
 
-    # Establecemos la API de Google
-    genai.configure(api_key=st.secrets["GOOGLE_API_KEY"])
-    # Seleccionamos el modelo a usar
-    model = genai.GenerativeModel('gemini-1.5-flash')
+    characters_dic = generate_characters(genre=genre, vibe=vibe, target=target, num_characters=num_characters)
+
+    prompt = generate_prompt(genre=genre, 
+                             vibe=vibe, 
+                             target=target, 
+                             duration=duration, 
+                             num_scene=num_scene, 
+                             num_chapters=num_chapters, 
+                             requirements=requirements, 
+                             full_text=full_text, 
+                             characters_dic=characters_dic)
+    
+    answer = generate_answer(chat_history=chat_history, prompt=prompt)
+
+    st.text_area(value=answer)
+
+    query = st.text_input("¿Realizar alguna pregunta?")
+    question = st.button("Preguntar")
+
+    if query and question:
+        result = generate_answer(prompt=query, chat_history=chat_history)
+        st.text_area(value=result)
+
+
+    
