@@ -1,5 +1,6 @@
 import streamlit as st
 from functions import *
+from img_functions import *
 
 # Inicializa el `session_state` si aún no está inicializado
 if 'chat_history' not in st.session_state:
@@ -7,6 +8,7 @@ if 'chat_history' not in st.session_state:
     st.session_state.answer = ""
     st.session_state.result = ""
     st.session_state.query = ""
+    st.session_state.images = []
 
 # Show title and description.
 st.title("📄 Document question answering")
@@ -21,6 +23,7 @@ uploaded_file = st.file_uploader("Sube un archivo PDF", type=["pdf"])
 genre = st.text_input("Estilo de la obra: ", value="")
 vibe = st.text_input("Tono de la novela: ", value="")
 target = st.text_input("Público objetivo: ", value="")
+style = st.text_input("Estilo de dibujo: ", value="")
 
 col1, col2 = st.columns(2)
 with col1:
@@ -82,8 +85,18 @@ if not st.session_state.chat_history:
             st.session_state.query = st.text_input("¿Realizar alguna pregunta?")
             question = st.button("Preguntar")
 
+            img_prompts = create_img_prompts(characters=characters_dic, genre=genre, vibe=vibe, target=target, style=style)
+
+            st.session_state.images = generate_images(prompts=img_prompts)
+
+            i = 0
+            for image in st.session_state.images:
+                st.image(image, caption=characters_dic[i]["name"], use_column_width=True)
+                i += 1
+
             if st.session_state.query and question:
                 st.session_state.result = generate_answer(prompt=st.session_state.query, chat_history=st.session_state.chat_history)
+            
 
 else:
 
@@ -126,6 +139,15 @@ else:
                                     characters_dic=characters_dic)
             
             st.session_state.answer = generate_answer(chat_history=st.session_state.chat_history, prompt=prompt)
+
+            img_prompts = create_img_prompts(characters=characters_dic, genre=genre, vibe=vibe, target=target, style=style)
+
+            st.session_state.images = generate_images(prompts=img_prompts)
+
+            i = 0
+            for image in st.session_state.images:
+                st.image(image, caption=characters_dic[i]["name"], use_column_width=True)
+                i += 1
 
     st.text_area("Respuesta: ", st.session_state.answer, height=800)
 
