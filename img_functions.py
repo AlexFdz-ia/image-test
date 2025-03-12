@@ -4,7 +4,7 @@ from together import Together
 from io import BytesIO
 from PIL import Image
 
-TOGETHER_API_KEY = st.secrets("TOGETHER_API_KEY")
+TOGETHER_API_KEY = st.secrets["TOGETHER_API_KEY"]
 client=Together(api_key=TOGETHER_API_KEY)
 
 def create_img_prompts(characters, genre, vibe, target, style):

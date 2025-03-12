@@ -26,7 +26,7 @@ def check(genre,
             uploaded_file)
 
 # Establecemos la API de Google
-genai.configure(api_key=st.secrets("GOOGLE_API_KEY"))
+genai.configure(api_key=st.secrets["GOOGLE_API_KEY"])
 # Seleccionamos el modelo a usar
 model = genai.GenerativeModel('gemini-1.5-flash')
 
