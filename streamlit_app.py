@@ -59,14 +59,10 @@ if not st.session_state.chat_history:
             
             full_text = read_file(file=uploaded_file)
 
-            characters = generate_characters(genre=genre, 
+            characters_dic = generate_characters(genre=genre, 
                                             vibe=vibe, 
                                             target=target, 
                                             num_characters=num_characters)
-            
-            st.text(characters)
-            
-            characters_dic = json.loads(characters)
 
             prompt = generate_prompt(genre=genre, 
                                     vibe=vibe, 
@@ -91,7 +87,7 @@ if not st.session_state.chat_history:
 
             i = 0
             for image in st.session_state.images:
-                st.image(image, caption=characters_dic[i]["name"], use_column_width=True)
+                st.image(image, caption=characters_dic[i]["name"], use_container_width=True)
                 i += 1
 
             if st.session_state.query and question:
@@ -119,14 +115,10 @@ else:
             
             full_text = read_file(file=uploaded_file)
 
-            characters = generate_characters(genre=genre, 
+            characters_dic = generate_characters(genre=genre, 
                                             vibe=vibe, 
                                             target=target, 
                                             num_characters=num_characters)
-            
-            st.text(characters)
-            
-            characters_dic = json.loads(characters)
 
             prompt = generate_prompt(genre=genre, 
                                     vibe=vibe, 
@@ -146,7 +138,7 @@ else:
 
             i = 0
             for image in st.session_state.images:
-                st.image(image, caption=characters_dic[i]["name"], use_column_width=True)
+                st.image(image, caption=characters_dic[i]["name"], use_container_width=True)
                 i += 1
 
     st.text_area("Respuesta: ", st.session_state.answer, height=800)

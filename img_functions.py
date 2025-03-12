@@ -1,9 +1,10 @@
 import base64, json
+import streamlit as st
 from together import Together
 from io import BytesIO
 from PIL import Image
 
-TOGETHER_API_KEY = '180c4d6f1c2c8acb9ac4db57bfa5120d0a03fbd6864dbc1165f68bd0180453ec'
+TOGETHER_API_KEY = st.secrets("TOGETHER_API_KEY")
 client=Together(api_key=TOGETHER_API_KEY)
 
 def create_img_prompts(characters, genre, vibe, target, style):

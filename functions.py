@@ -1,4 +1,5 @@
 import json
+import re
 import streamlit as st
 from PyPDF2 import PdfReader
 import google.generativeai as genai
@@ -25,7 +26,7 @@ def check(genre,
             uploaded_file)
 
 # Establecemos la API de Google
-genai.configure(api_key="AIzaSyDJ7JahaV2HEmQx-RWPeFbvTVhYJZ8DECo")
+genai.configure(api_key=st.secrets("GOOGLE_API_KEY"))
 # Seleccionamos el modelo a usar
 model = genai.GenerativeModel('gemini-1.5-flash')
 
@@ -88,7 +89,14 @@ def generate_characters(genre, vibe, target, num_characters):
 
     characters = model.generate_content(characters_prompt).text
 
-    return characters
+    try:
+        characters_dic = json.loads(characters)
+    except:
+        resultado = re.sub(r"^[^\[]*(?=\[)|(?<=\])[^\]]*$", "", characters, flags=re.S)
+
+        characters_dic = json.loads(resultado)
+
+    return characters_dic
 
 def generate_prompt(genre, vibe, target, duration, num_scene, num_chapters, requirements, full_text, characters_dic):
     full_prompt = f"""
