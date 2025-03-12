@@ -2,6 +2,11 @@ import streamlit as st
 from functions import *
 from img_functions import *
 
+st.set_page_config(
+    page_title="Creador de novelas",
+    page_icon="🖍️",
+)
+
 # Inicializa el `session_state` si aún no está inicializado
 if 'chat_history' not in st.session_state:
     st.session_state.chat_history = []
@@ -144,6 +149,10 @@ else:
                                     characters_dic=characters_dic)
             
             st.session_state.answer = generate_answer(chat_history=st.session_state.chat_history, prompt=prompt)
+
+            img_prompts = create_img_prompts(characters=characters_dic, genre=genre, vibe=vibe, target=target, style=style)
+
+            st.session_state.images = generate_images(prompts=img_prompts)
 
     st.text_area("Respuesta: ", st.session_state.answer, height=800)
 
