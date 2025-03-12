@@ -67,7 +67,7 @@ def generate_characters(genre, vibe, target, num_characters):
 
     characters = model.generate_content(characters_prompt).text
 
-    return json.loads(characters)
+    return characters
 
 def generate_prompt(genre, vibe, target, duration, num_scene, num_chapters, requirements, full_text, characters_dic):
     full_prompt = f"""

@@ -6,7 +6,7 @@ chat_history = []
 # Show title and description.
 st.title("📄 Document question answering")
 st.write(
-    "Upload a document below and ask a question about it – GPT will answer! "
+    "Upload a document below and ask a question about it – Gemini will answer! "
 )
 
 # Definición del formulario
@@ -47,7 +47,12 @@ else:
     
     full_text = read_file(file=uploaded_file)
 
-    characters_dic = generate_characters(genre=genre, vibe=vibe, target=target, num_characters=num_characters)
+    characters = generate_characters(genre=genre, 
+                                    vibe=vibe, 
+                                    target=target, 
+                                    num_characters=num_characters)
+    
+    characters_dic = json.loads(characters)
 
     prompt = generate_prompt(genre=genre, 
                              vibe=vibe, 
