@@ -145,15 +145,6 @@ else:
             
             st.session_state.answer = generate_answer(chat_history=st.session_state.chat_history, prompt=prompt)
 
-            img_prompts = create_img_prompts(characters=characters_dic, genre=genre, vibe=vibe, target=target, style=style)
-
-            st.session_state.images = generate_images(prompts=img_prompts)
-
-            i = 0
-            for image in st.session_state.images:
-                st.image(image, caption=characters_dic[i]["name"], use_container_width=True)
-                i += 1
-
     st.text_area("Respuesta: ", st.session_state.answer, height=800)
 
     query2 = st.text_input("¿Realizar alguna pregunta?")
